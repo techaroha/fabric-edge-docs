@@ -5,26 +5,26 @@ title: Set up and use Proof of Stake (PoS)
 
 ## Overview
 
-This guide goes into detail on how to set up a Proof of Stake network with the Polygon Edge, how to stake funds for nodes
+This guide goes into detail on how to set up a Proof of Stake network with the Fabric Edge, how to stake funds for nodes
 to become validators and how to unstake funds.
 
 It **highly encouraged** to read and go through
 the [Local Setup](/docs/get-started/set-up-ibft-locally)
 / [Cloud Setup](/docs/get-started/set-up-ibft-on-the-cloud) sections, before going along
 with this PoS guide. These sections outline the steps needed to start a Proof of Authority (PoA) cluster with the
-Polygon Edge.
+Fabric Edge.
 
 Currently, there is no limit to the number of validators that can stake funds on the Staking Smart Contract.
 
 ## Staking Smart Contract
 
-The repo for the Staking Smart Contract is located [here](https://github.com/0xPolygon/staking-contracts).
+The repo for the Staking Smart Contract is located [here](https://github.com/techaroha/staking-contracts).
 
 It holds the necessary testing scripts, ABI files and most importantly the Staking Smart Contract itself.
 
 ## Setting up an N node cluster
 
-Setting up a network with the Polygon Edge is covered in
+Setting up a network with the Fabric Edge is covered in
 the [Local Setup](/docs/get-started/set-up-ibft-locally)
 / [Cloud Setup](/docs/get-started/set-up-ibft-on-the-cloud) sections.
 
@@ -33,7 +33,7 @@ The **only difference** between setting up a PoS and PoA cluster is in the genes
 **When generating the genesis file for a PoS cluster, an additional flag is needed `--pos`**:
 
 ```bash
-polygon-edge genesis --pos ...
+fabric-edge genesis --pos ...
 ```
 
 ## Setting the length of an epoch
@@ -44,7 +44,7 @@ To set the size of an epoch for a cluster (in blocks), when generating the genes
 specified `--epoch-size`:
 
 ```bash
-polygon-edge genesis --epoch-size 50
+fabric-edge genesis --epoch-size 50
 ```
 
 This value specified in the genesis file that the epoch size should be `50` blocks.
@@ -76,7 +76,7 @@ npm install
 ### Setting up the provided helper scripts
 
 Scripts for interacting with the deployed Staking Smart Contract are located on
-the [Staking Smart Contract repo](https://github.com/0xPolygon/staking-contracts).
+the [Staking Smart Contract repo](https://github.com/techaroha/staking-contracts).
 
 Create an `.env` file with the following parameters in the Smart Contracts repo location:
 

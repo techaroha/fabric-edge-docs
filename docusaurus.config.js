@@ -2,14 +2,14 @@ require('dotenv').config()
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-    title: 'Polygon Edge',
-    url: 'https://edge-docs.polygon.technology',
+    title: 'Fabric Edge',
+    url: 'https://fabric-edge-docs.techaroha.com',
     baseUrl: '/',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon-32x32.png',
-    organizationName: '0xPolygon',
-    projectName: 'polygon-edge-docs',
+    organizationName: '0xFabric',
+    projectName: 'fabric-edge-docs',
     themes: ['docusaurus-theme-search-typesense'],
     themeConfig: {
         colorMode: {
@@ -20,9 +20,9 @@ module.exports = {
         },
         navbar: {
             hideOnScroll: true,
-            title: 'Polygon Edge',
+            title: 'Fabric Edge',
             logo: {
-                alt: 'Polygon Edge Logo',
+                alt: 'Fabric Edge Logo',
                 src: 'img/logo.svg',
                 href: 'docs/overview'
             },
@@ -34,7 +34,7 @@ module.exports = {
                     position: 'left'
                 },
                 {
-                    href: 'https://github.com/0xPolygon/polygon-edge',
+                    href: 'https://github.com/techaroha/fabric-edge-docs',
                     position: 'right',
                     className: 'header-github-link',
                     'aria-label': 'GitHub repository',
@@ -46,7 +46,7 @@ module.exports = {
             copyright: `Made with ❤ by the humans at <a href='https://trapesys.io'>Trapesys</a>`
         },
         typesense: {
-            typesenseCollectionName: 'sdk-docs.polygon.technology', // Replace with your own doc site's name. Should match the collection name in the scraper settings.
+            typesenseCollectionName: 'sdk-docs.fabric-edge.techaroha.com', // Replace with your own doc site's name. Should match the collection name in the scraper settings.
             typesenseServerConfig: {
                 nodes: [
                     {

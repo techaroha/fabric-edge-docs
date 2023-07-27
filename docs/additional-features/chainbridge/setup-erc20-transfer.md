@@ -3,7 +3,7 @@ id: setup-erc20-transfer
 title: ERC20 Token Transfer
 ---
 
-So far, we've set up bridge to exchange assets/data between Polygon PoS and Polygon Edge chain. This section will guide you to set up an ERC20 bridge and send tokens between different blockchains.
+So far, we've set up bridge to exchange assets/data between Fabric PoS and Fabric Edge chain. This section will guide you to set up an ERC20 bridge and send tokens between different blockchains.
 
 ## Step 1: Register resource ID
 
@@ -12,7 +12,7 @@ Firstly, you will register a resource ID that associates resources in a cross-ch
 To register resource ID, you can use the `cb-sol-cli bridge register-resource` command. You will need to give the private key of the `admin` account.
 
 ```bash
-# For Polygon PoS chain
+# For Fabric PoS chain
 $ cb-sol-cli bridge register-resource \
   --url https://rpc-mumbai.matic.today \
   --privateKey [ADMIN_ACCOUNT_PRIVATE_KEY] \
@@ -23,7 +23,7 @@ $ cb-sol-cli bridge register-resource \
   --handler "[ERC20_HANDLER_CONTRACT_ADDRESS]" \
   --targetContract "[ERC20_CONTRACT_ADDRESS]" 
 
-# For Polygon Edge chain
+# For Fabric Edge chain
 $ cb-sol-cli bridge register-resource \
   --url http://localhost:10002 \
   --privateKey [ADMIN_ACCOUNT_PRIVATE_KEY] \
@@ -56,7 +56,7 @@ $ cb-sol-cli erc20 add-minter \
 
 ## Step 2: Transfer ERC20 Token
 
-We will send ERC20 Tokens from the Polygon PoS chain to the Polygon Edge chain.
+We will send ERC20 Tokens from the Fabric PoS chain to the Fabric Edge chain.
 
 First, you will get tokens by minting. An account with the `minter` role can mint new tokens. The account that has deployed the ERC20 contract has the `minter` role by default. To specify other accounts as members of the `minter` role, you need to run the `cb-sol-cli erc20 add-minter` command.
 
@@ -95,37 +95,37 @@ $ cb-sol-cli erc20 approve \
   --amount 500
 ```
 
-To transfer tokens to Polygon Edge chains, you will call `deposit`.
+To transfer tokens to Fabric Edge chains, you will call `deposit`.
 
 ```bash
-# Start transfer from Polygon PoS to Polygon Edge chain
+# Start transfer from Fabric PoS to Fabric Edge chain
 $ cb-sol-cli erc20 deposit \
   --url https://rpc-mumbai.matic.today \
   --privateKey [PRIVATE_KEY] \
   --gasPrice [GAS_PRICE] \
   --amount 10 \
-  # ChainID of Polygon Edge chain
+  # ChainID of Fabric Edge chain
   --dest 100 \
   --bridge "[BRIDGE_CONTRACT_ADDRESS]" \
-  --recipient "[RECIPIENT_ADDRESS_IN_POLYGON_EDGE_CHAIN]" \
+  --recipient "[RECIPIENT_ADDRESS_IN_FABRIC_EDGE_CHAIN]" \
   --resourceId "0x000000000000000000000000000000c76ebe4a02bbc34786d860b355f5a5ce00"
 ```
 
-After the deposit transaction was successful, the relayer will get the event and vote for the proposal. It executes a transaction to send tokens to the recipient account in the Polygon Edge chain after the required number of votes are submitted. 
+After the deposit transaction was successful, the relayer will get the event and vote for the proposal. It executes a transaction to send tokens to the recipient account in the Fabric Edge chain after the required number of votes are submitted. 
 
 ```bash
 INFO[11-19|08:15:58] Handling fungible deposit event          chain=mumbai dest=100 nonce=1
-INFO[11-19|08:15:59] Attempting to resolve message            chain=polygon-edge type=FungibleTransfer src=99 dst=100 nonce=1 rId=000000000000000000000000000000c76ebe4a02bbc34786d860b355f5a5ce00
-INFO[11-19|08:15:59] Creating erc20 proposal                  chain=polygon-edge src=99 nonce=1
-INFO[11-19|08:15:59] Watching for finalization event          chain=polygon-edge src=99 nonce=1
-INFO[11-19|08:15:59] Submitted proposal vote                  chain=polygon-edge tx=0x67a97849951cdf0480e24a95f59adc65ae75da23d00b4ab22e917a2ad2fa940d src=99 depositNonce=1 gasPrice=1
-INFO[11-19|08:16:24] Submitted proposal execution             chain=polygon-edge tx=0x63615a775a55fcb00676a40e3c9025eeefec94d0c32ee14548891b71f8d1aad1 src=99 dst=100 nonce=1 gasPrice=5
+INFO[11-19|08:15:59] Attempting to resolve message            chain=fabric-edge type=FungibleTransfer src=99 dst=100 nonce=1 rId=000000000000000000000000000000c76ebe4a02bbc34786d860b355f5a5ce00
+INFO[11-19|08:15:59] Creating erc20 proposal                  chain=fabric-edge src=99 nonce=1
+INFO[11-19|08:15:59] Watching for finalization event          chain=fabric-edge src=99 nonce=1
+INFO[11-19|08:15:59] Submitted proposal vote                  chain=fabric-edge tx=0x67a97849951cdf0480e24a95f59adc65ae75da23d00b4ab22e917a2ad2fa940d src=99 depositNonce=1 gasPrice=1
+INFO[11-19|08:16:24] Submitted proposal execution             chain=fabric-edge tx=0x63615a775a55fcb00676a40e3c9025eeefec94d0c32ee14548891b71f8d1aad1 src=99 dst=100 nonce=1 gasPrice=5
 ```
 
-Once the execution transaction has been successful, you will get tokens in the Polygon Edge chain.
+Once the execution transaction has been successful, you will get tokens in the Fabric Edge chain.
 
 ```bash
-# Check the ERC20 balance in Polygon Edge chain
+# Check the ERC20 balance in Fabric Edge chain
 $ cb-sol-cli erc20 balance \
   --url https://localhost:10002 \
   --privateKey [PRIVATE_KEY] \

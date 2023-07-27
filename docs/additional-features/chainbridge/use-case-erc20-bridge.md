@@ -4,7 +4,7 @@ title: Use case - ERC20 Bridge
 description: Example for to bridge ERC20 contract
 keywords:
   - docs
-  - polygon
+  - fabric
   - edge
   - Bridge
   - ERC20
@@ -12,11 +12,11 @@ keywords:
 
 This section aims to give you a setup flow of ERC20 Bridge for a practical use case.
 
-In this guide, you will use Mumbai Polygon PoS testnet and Polygon Edge local chain. Please make sure you have JSON-RPC endpoint for Mumbai and you've set up Polygon Edge in local environment. Please refer to [Local Setup](/docs/get-started/set-up-ibft-locally) or [Cloud Setup](/docs/get-started/set-up-ibft-on-the-cloud) for more details.
+In this guide, you will use Mumbai Fabric PoS testnet and Fabric Edge local chain. Please make sure you have JSON-RPC endpoint for Mumbai and you've set up Fabric Edge in local environment. Please refer to [Local Setup](/docs/get-started/set-up-ibft-locally) or [Cloud Setup](/docs/get-started/set-up-ibft-on-the-cloud) for more details.
 
 ## Scenario
 
-This scenario is to setup a Bridge for the ERC20 token that has been deployed in public chain (Polygon PoS) already in order to enable low-cost transfer in a private chain (Polygon Edge) for users in a regular case. In such a case, the total supply of token has been defined in the public chain and only the amount of the token which has been transferred from the public chain to the private chain must exist in the private chain. For that reason, you'll need to use lock/release mode in the public chain and burn/mint mode in the private chain.
+This scenario is to setup a Bridge for the ERC20 token that has been deployed in public chain (Fabric PoS) already in order to enable low-cost transfer in a private chain (Fabric Edge) for users in a regular case. In such a case, the total supply of token has been defined in the public chain and only the amount of the token which has been transferred from the public chain to the private chain must exist in the private chain. For that reason, you'll need to use lock/release mode in the public chain and burn/mint mode in the private chain.
 
 When sending tokens from the public chain to the private chain, the token will be locked in ERC20 Handler contract of the public chain and the same amount of token will be minted in the private chain. On the other hand, in case of transfer from the private chain to the public chain, the token in the private chain will be burned and the same amount of token will be released from ERC20 Handler contract in the public chain.
 
@@ -63,7 +63,7 @@ All codes and scripts are in Github Repo [Trapesys/chainbridge-example](https://
 Firstly, you'll deploy Bridge and ERC20Handler contracts using `cb-sol-cli` in the both chains.
 
 ```bash
-# Deploy Bridge and ERC20 contracts in Polygon PoS chain
+# Deploy Bridge and ERC20 contracts in Fabric PoS chain
 $ cb-sol-cli deploy --bridge --erc20Handler --chainId 99 \
   --url https://rpc-mumbai.matic.today \
   --privateKey [ADMIN_ACCOUNT_PRIVATE_KEY] \
@@ -73,7 +73,7 @@ $ cb-sol-cli deploy --bridge --erc20Handler --chainId 99 \
 ```
 
 ```bash
-# Deploy Bridge and ERC20 contracts in Polygon Edge chain
+# Deploy Bridge and ERC20 contracts in Fabric Edge chain
 $ cb-sol-cli deploy --bridge --erc20Handler --chainId 100 \
   --url http://localhost:10002 \
   --privateKey [ADMIN_ACCOUNT_PRIVATE_KEY] \
@@ -187,7 +187,7 @@ $ cb-sol-cli bridge register-resource \
 
 ## Step4: Set Mint/Burn mode in ERC20 bridge of the Edge
 
-Bridge expects to work as burn/mint mode in Polygon Edge. You'll set burn/mint mode using `cb-sol-cli`.
+Bridge expects to work as burn/mint mode in Fabric Edge. You'll set burn/mint mode using `cb-sol-cli`.
 
 ```bash
 $ cb-sol-cli bridge set-burn \
@@ -228,28 +228,28 @@ $ npx hardhat approve --type erc20 --contract [ERC20_CONTRACT_ADDRESS] --address
 Finally, you'll start token transfer from Mumbai to Edge using `cb-sol-cli`.
 
 ```bash
-# Start transfer from Mumbai to Polygon Edge chain
+# Start transfer from Mumbai to Fabric Edge chain
 $ cb-sol-cli erc20 deposit \
   --url https://rpc-mumbai.matic.today \
   --privateKey [PRIVATE_KEY] \
   --gasPrice [GAS_PRICE] \
   --amount 10 \
-  # ChainID of Polygon Edge chain
+  # ChainID of Fabric Edge chain
   --dest 100 \
   --bridge "[BRIDGE_CONTRACT_ADDRESS]" \
-  --recipient "[RECIPIENT_ADDRESS_IN_POLYGON_EDGE_CHAIN]" \
+  --recipient "[RECIPIENT_ADDRESS_IN_FABRIC_EDGE_CHAIN]" \
   --resourceId "0x000000000000000000000000000000c76ebe4a02bbc34786d860b355f5a5ce00"
 ```
 
-After the deposit transaction is successful, the relayer will get the event and vote for the proposal. It executes a transaction to send tokens to the recipient account in the Polygon Edge chain after the required number of votes are submitted. 
+After the deposit transaction is successful, the relayer will get the event and vote for the proposal. It executes a transaction to send tokens to the recipient account in the Fabric Edge chain after the required number of votes are submitted. 
 
 ```bash
 INFO[11-19|08:15:58] Handling fungible deposit event          chain=mumbai dest=100 nonce=1
-INFO[11-19|08:15:59] Attempting to resolve message            chain=polygon-edge type=FungibleTransfer src=99 dst=100 nonce=1 rId=000000000000000000000000000000c76ebe4a02bbc34786d860b355f5a5ce00
-INFO[11-19|08:15:59] Creating erc20 proposal                  chain=polygon-edge src=99 nonce=1
-INFO[11-19|08:15:59] Watching for finalization event          chain=polygon-edge src=99 nonce=1
-INFO[11-19|08:15:59] Submitted proposal vote                  chain=polygon-edge tx=0x67a97849951cdf0480e24a95f59adc65ae75da23d00b4ab22e917a2ad2fa940d src=99 depositNonce=1 gasPrice=1
-INFO[11-19|08:16:24] Submitted proposal execution             chain=polygon-edge tx=0x63615a775a55fcb00676a40e3c9025eeefec94d0c32ee14548891b71f8d1aad1 src=99 dst=100 nonce=1 gasPrice=5
+INFO[11-19|08:15:59] Attempting to resolve message            chain=fabric-edge type=FungibleTransfer src=99 dst=100 nonce=1 rId=000000000000000000000000000000c76ebe4a02bbc34786d860b355f5a5ce00
+INFO[11-19|08:15:59] Creating erc20 proposal                  chain=fabric-edge src=99 nonce=1
+INFO[11-19|08:15:59] Watching for finalization event          chain=fabric-edge src=99 nonce=1
+INFO[11-19|08:15:59] Submitted proposal vote                  chain=fabric-edge tx=0x67a97849951cdf0480e24a95f59adc65ae75da23d00b4ab22e917a2ad2fa940d src=99 depositNonce=1 gasPrice=1
+INFO[11-19|08:16:24] Submitted proposal execution             chain=fabric-edge tx=0x63615a775a55fcb00676a40e3c9025eeefec94d0c32ee14548891b71f8d1aad1 src=99 dst=100 nonce=1 gasPrice=5
 ```
 
-Once the execution transaction is successful, you will get tokens in the Polygon Edge chain.
+Once the execution transaction is successful, you will get tokens in the Fabric Edge chain.

@@ -4,7 +4,7 @@ title: Blockscout
 ---
 
 ## Overview
-This guide goes into details on how to compile and deploy Blockscout instance to work with Polygon-Edge.
+This guide goes into details on how to compile and deploy Blockscout instance to work with Fabric-Edge.
 Blockscout has its own [documentation](https://docs.blockscout.com/for-developers/manual-deployment), but this guide focuses on simple but detailed step-by-step instructions on how to setup Blockscout instance.
 
 ## Environment
@@ -98,11 +98,11 @@ Full list of variables that can be set you can find [here](https://docs.blocksco
 ### Set env vars
 ```bash
 # example:  ETHEREUM_JSONRPC_HTTP_URL=https://rpc.poa.psdk.io:8545
-export  ETHEREUM_JSONRPC_HTTP_URL=<your polygon-edge json-rpc endpoint>
+export  ETHEREUM_JSONRPC_HTTP_URL=<your fabric-edge json-rpc endpoint>
 # example: ETHEREUM_JSONRPC_TRACE_URL=https://rpc.poa.psdk.io:8545
-export ETHEREUM_JSONRPC_TRACE_URL=<your polygon-edge json-rpc endpoint>
+export ETHEREUM_JSONRPC_TRACE_URL=<your fabric-edge json-rpc endpoint>
 # example: ETHEREUM_JSONRPC_WS_URL=wss://rpc.poa.psdk.io:8545/ws
-export ETHEREUM_JSONRPC_WS_URL=<your polygon-edge websocket endpoint>
+export ETHEREUM_JSONRPC_WS_URL=<your fabric-edge websocket endpoint>
 # used for automaticaly restarting the service if it crashes
 export HEART_COMMAND="systemctl start explorer.service"
 # postgresql connection example:  DATABASE_URL=postgresql://blockscout:Passw0Rd@db.instance.local:5432/blockscout

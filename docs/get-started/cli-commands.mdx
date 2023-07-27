@@ -6,7 +6,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
-This section details the present commands, command flags in the Polygon Edge, and how they're used.
+This section details the present commands, command flags in the Fabric Edge, and how they're used.
 
 :::tip JSON output support
 
@@ -57,7 +57,7 @@ Sets the flag indicating that the client should seal blocks. Default: `true`.
   </TabItem>
 </Tabs>
 
-Used to specify the data directory used for storing Polygon Edge client data. Default: `./test-chain`.
+Used to specify the data directory used for storing Fabric Edge client data. Default: `./test-chain`.
 
 ---
 
@@ -548,7 +548,7 @@ It needs to be larger than block time and `BlockTime * 5` is set if it's not spe
   </TabItem>
   <TabItem value="example" label="Example">
 
-    server --access-control-allow-origins "https://edge-docs.polygon.technology"
+    server --access-control-allow-origins "https://fabric-edge-docs.techaroha.com"
 
   </TabItem>
 </Tabs>
@@ -576,7 +576,7 @@ If omitted Access-Control-Allow-Origins header will be set to `*` and all domain
   </TabItem>
 </Tabs>
 
-Sets the directory for the Polygon Edge genesis data. Default: `./genesis.json`.
+Sets the directory for the Fabric Edge genesis data. Default: `./genesis.json`.
 
 ---
 
@@ -1376,7 +1376,7 @@ Address of the gRPC API. Default: `127.0.0.1:9632`.
 | **Command** | **Description**                                                                                                                                      |
 |-------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | secrets init      | Initializes the private keys to the corresponding secrets manager                                                         |
-| secrets generate         | Generates a secrets manager configuration file which can be parsed by the Polygon Edge    |
+| secrets generate         | Generates a secrets manager configuration file which can be parsed by the Fabric Edge    |
 
 ### secrets init flags
 
@@ -1414,7 +1414,7 @@ Sets the path to the SecretsManager config file. Used for Hashicorp Vault. If om
   </TabItem>
 </Tabs>
 
-Sets the directory for the Polygon Edge data if the local FS is used.
+Sets the directory for the Fabric Edge data if the local FS is used.
 
 ### secrets generate flags
 
@@ -1509,7 +1509,7 @@ Specifies the server URL for the service
   </TabItem>
 </Tabs>
 
-Specifies the name of the node for on-service record keeping. Default: `polygon-edge-node`
+Specifies the name of the node for on-service record keeping. Default: `fabric-edge-node`
 
 ---
 

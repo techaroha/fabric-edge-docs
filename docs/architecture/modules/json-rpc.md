@@ -13,7 +13,7 @@ endpoints.
 
 ## Blockchain Interface
 
-The Polygon Edge uses the ***blockchain interface*** to define all the methods that the JSON RPC module needs to use, in
+The Fabric Edge uses the ***blockchain interface*** to define all the methods that the JSON RPC module needs to use, in
 order to deliver its endpoints.
 
 The blockchain interface is implemented by the **[Minimal](/docs/architecture/modules/minimal)** server. It is the base implementation

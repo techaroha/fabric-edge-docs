@@ -5,23 +5,23 @@ title: Set up GCP Secrets Manager
 
 ## Overview
 
-Currently, the Polygon Edge is concerned with keeping 2 major runtime secrets:
+Currently, the Fabric Edge is concerned with keeping 2 major runtime secrets:
 * The **validator private key** used by the node, if the node is a validator
 * The **networking private key** used by libp2p, for participating and communicating with other peers
 
 For additional information, please read through the [Managing Private Keys Guide](/docs/configuration/manage-private-keys)
 
-The modules of the Polygon Edge **should not need to know how to keep secrets**. Ultimately, a module should not care if
+The modules of the Fabric Edge **should not need to know how to keep secrets**. Ultimately, a module should not care if
 a secret is stored on a far-away server or locally on the node's disk.
 
 Everything a module needs to know about secret-keeping is **knowing to use the secret**, **knowing which secrets to get
 or save**. The finer implementation details of these operations are delegated away to the `SecretsManager`, which of course is an abstraction.
 
-The node operator that's starting the Polygon Edge can now specify which secrets manager they want to use, and as soon
+The node operator that's starting the Fabric Edge can now specify which secrets manager they want to use, and as soon
 as the correct secrets manager is instantiated, the modules deal with the secrets through the mentioned interface -
 without caring if the secrets are stored on a disk or on a server.
 
-This article details the necessary steps to get the Polygon Edge up and running with [GCP Secret Manager](https://cloud.google.com/secret-manager).
+This article details the necessary steps to get the Fabric Edge up and running with [GCP Secret Manager](https://cloud.google.com/secret-manager).
 
 :::info previous guides
 It is **highly recommended** that before going through this article, articles on [**Local Setup**](/docs/get-started/set-up-ibft-locally)
@@ -51,25 +51,25 @@ Required information before continuing:
 
 ## Step 1 - Generate the secrets manager configuration
 
-In order for the Polygon Edge to be able to seamlessly communicate with the GCP SM, it needs to parse an already
+In order for the Fabric Edge to be able to seamlessly communicate with the GCP SM, it needs to parse an already
 generated config file, which contains all the necessary information for secret storage on GCP SM.
 
 To generate the configuration, run the following command:
 
 ```bash
-polygon-edge secrets generate --type gcp-ssm --dir <PATH> --name <NODE_NAME> --extra project-id=<PROJECT_ID>,gcp-ssm-cred=<GCP_CREDS_FILE>
+fabric-edge secrets generate --type gcp-ssm --dir <PATH> --name <NODE_NAME> --extra project-id=<PROJECT_ID>,gcp-ssm-cred=<GCP_CREDS_FILE>
 ```
 
 Parameters present:
 * `PATH` is the path to which the configuration file should be exported to. Default `./secretsManagerConfig.json`
-* `NODE_NAME` is the name of the current node for which the GCP SM configuration is being set up as. It can be an arbitrary value. Default `polygon-edge-node`
+* `NODE_NAME` is the name of the current node for which the GCP SM configuration is being set up as. It can be an arbitrary value. Default `fabric-edge-node`
 * `PROJECT_ID` is the ID of the project the user has defined in GCP console during account setup and Secrets Manager API activation.
 * `GCP_CREDS_FILE` is the path to the json file containing credentials which will allow read/write access to the Secrets Manager.
 
 :::caution Node names
 Be careful when specifying node names.
 
-The Polygon Edge uses the specified node name to keep track of the secrets it generates and uses on the GCP SM.
+The Fabric Edge uses the specified node name to keep track of the secrets it generates and uses on the GCP SM.
 Specifying an existing node name can have consequences of failing to write secret to GCP SM.
 
 Secrets are stored on the following base path: `projects/PROJECT_ID/NODE_NAME`
@@ -81,7 +81,7 @@ Now that the configuration file is present, we can initialize the required secre
 file set up in step 1, using the `--config`:
 
 ```bash
-polygon-edge secrets init --config <PATH>
+fabric-edge secrets init --config <PATH>
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.
@@ -93,17 +93,17 @@ and [**Cloud Setup**](/docs/get-started/set-up-ibft-on-the-cloud) guides, with m
 
 Since GCP SM is being used instead of the local file system, validator addresses should be added through the `--ibft-validator` flag:
 ```bash
-polygon-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
+fabric-edge genesis --ibft-validator <VALIDATOR_ADDRESS> ...
 ```
 
-## Step 4 - Start the Polygon Edge client
+## Step 4 - Start the Fabric Edge client
 
 Now that the keys are set up, and the genesis file is generated, the final step to this process would be starting the
-Polygon Edge with the `server` command.
+Fabric Edge with the `server` command.
 
 The `server` command is used in the same manner as in the previously mentioned guides, with a minor addition - the `--secrets-config` flag:
 ```bash
-polygon-edge server --secrets-config <PATH> ...
+fabric-edge server --secrets-config <PATH> ...
 ```
 
 The `PATH` param is the location of the previously generated secrets manager param from step 1.

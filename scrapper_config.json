@@ -1,10 +1,10 @@
 {
-  "index_name": "sdk-docs.polygon.technology",
+  "index_name": "sdk-docs.fabric-edge.techaroha.com",
   "start_urls": [
-    "https://edge-docs.polygon.technology"
+    "https://fabric-edge-docs.techaroha.com"
   ],
   "sitemap_urls": [
-    "https://edge-docs.polygon.technology/sitemap.xml"
+    "https://fabric-edge-docs.techaroha.com/sitemap.xml"
   ],
   "stop_urls": [],
   "sitemap_alternate_links": true,

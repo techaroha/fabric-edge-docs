@@ -4,7 +4,7 @@ title: Use case - ERC721 Bridge
 description: Example for to bridge ERC721 contract
 keywords:
   - docs
-  - polygon
+  - fabric
   - edge
   - Bridge
   - ERC20
@@ -12,11 +12,11 @@ keywords:
 
 This section aims to give you a setup flow of ERC721 Bridge for a practical use case.
 
-In this guide, you will use Mumbai Polygon PoS testnet and Polygon Edge local chain. Please make sure you have JSON-RPC endpoint for Mumbai and you've set up Polygon Edge in local environment. Please refer to [Local Setup](/docs/get-started/set-up-ibft-locally) or [Cloud Setup](/docs/get-started/set-up-ibft-on-the-cloud) for more details.
+In this guide, you will use Mumbai Fabric PoS testnet and Fabric Edge local chain. Please make sure you have JSON-RPC endpoint for Mumbai and you've set up Fabric Edge in local environment. Please refer to [Local Setup](/docs/get-started/set-up-ibft-locally) or [Cloud Setup](/docs/get-started/set-up-ibft-on-the-cloud) for more details.
 
 ## Scenario
 
-This scenario is to setup a Bridge for the ERC721 NFT that has been deployed in public chain (Polygon PoS) already in order to enable low-cost transfer in a private chain (Polygon Edge) for users in a regular case. In such a case, the original metadata has been defined in the public chain and the only NFTs that have been transferred from Public chain can exist in the private chain. For that reason, you'll need to use lock/release mode in the public chain and burn/mint mode in the private chain.
+This scenario is to setup a Bridge for the ERC721 NFT that has been deployed in public chain (Fabric PoS) already in order to enable low-cost transfer in a private chain (Fabric Edge) for users in a regular case. In such a case, the original metadata has been defined in the public chain and the only NFTs that have been transferred from Public chain can exist in the private chain. For that reason, you'll need to use lock/release mode in the public chain and burn/mint mode in the private chain.
 
 When sending NFTs from the public chain to the private chain, the NFT will be locked in ERC721 Handler contract in the public chain and the same NFT will be minted in the private chain. On the other hand, in case of transfer from the private chain to the public chain, the NFT in the private chain will be burned and the same NFT will be released from ERC721 Handler contract in the public chain.
 
@@ -112,7 +112,7 @@ All codes and scripts are in Github Repo [Trapesys/chainbridge-example](https://
 Firstly, you'll deploy Bridge and ERC721Handler contracts using `cb-sol-cli` in the both chains.
 
 ```bash
-# Deploy Bridge and ERC721 contracts in Polygon PoS chain
+# Deploy Bridge and ERC721 contracts in Fabric PoS chain
 $ cb-sol-cli deploy --bridge --erc721Handler --chainId 99 \
   --url https://rpc-mumbai.matic.today \
   --gasPrice [GAS_PRICE] \
@@ -122,7 +122,7 @@ $ cb-sol-cli deploy --bridge --erc721Handler --chainId 99 \
 ```
 
 ```bash
-# Deploy Bridge and ERC721 contracts in Polygon Edge chain
+# Deploy Bridge and ERC721 contracts in Fabric Edge chain
 $ cb-sol-cli deploy --bridge --erc721Handler --chainId 100 \
   --url http://localhost:10002 \
   --privateKey [ADMIN_ACCOUNT_PRIVATE_KEY] \
@@ -280,29 +280,29 @@ $ npx hardhat approve --type erc721 --contract [ERC721_CONTRACT_ADDRESS] --addre
 Finally, you'll start NFT transfer from Mumbai to Edge.
 
 ```bash
-# Start transfer from Mumbai to Polygon Edge chain
+# Start transfer from Mumbai to Fabric Edge chain
 $ cb-sol-cli erc721 deposit \
   --url https://rpc-mumbai.matic.today \
   --privateKey [PRIVATE_KEY] \
   --gasPrice [GAS_PRICE] \
   --id 0x50 \
-  # ChainID for Polygon Edge chain
+  # ChainID for Fabric Edge chain
   --dest 100 \
   --bridge "[BRIDGE_CONTRACT_ADDRESS]" \
-  --recipient "[RECIPIENT_ADDRESS_IN_POLYGON_EDGE_CHAIN]" \
+  --recipient "[RECIPIENT_ADDRESS_IN_FABRIC_EDGE_CHAIN]" \
   --resourceId "0x000000000000000000000000000000e389d61c11e5fe32ec1735b3cd38c69501"
 ```
 
 After the deposit transaction is successful, the relayer will get the event and vote for the proposal.  
-It executes a transaction to send NFT to the recipient account in Polygon Edge chain after the required number of votes are submitted. 
+It executes a transaction to send NFT to the recipient account in Fabric Edge chain after the required number of votes are submitted. 
 
 ```bash
 INFO[11-19|09:07:50] Handling nonfungible deposit event       chain=mumbai
-INFO[11-19|09:07:50] Attempting to resolve message            chain=polygon-edge type=NonFungibleTransfer src=99 dst=100 nonce=2 rId=000000000000000000000000000000e389d61c11e5fe32ec1735b3cd38c69501
-INFO[11-19|09:07:50] Creating erc721 proposal                 chain=polygon-edge src=99 nonce=2
-INFO[11-19|09:07:50] Watching for finalization event          chain=polygon-edge src=99 nonce=2
-INFO[11-19|09:07:50] Submitted proposal vote                  chain=polygon-edge tx=0x58a22d84a08269ad2e8d52d8dc038621f1a21109d11c7b6e0d32d5bf21ea8505 src=99 depositNonce=2 gasPrice=1
-INFO[11-19|09:08:15] Submitted proposal execution             chain=polygon-edge tx=0x57419844881a07531e31667c609421662d94d21d0709e64fb728138309267e68 src=99 dst=100 nonce=2 gasPrice=3
+INFO[11-19|09:07:50] Attempting to resolve message            chain=fabric-edge type=NonFungibleTransfer src=99 dst=100 nonce=2 rId=000000000000000000000000000000e389d61c11e5fe32ec1735b3cd38c69501
+INFO[11-19|09:07:50] Creating erc721 proposal                 chain=fabric-edge src=99 nonce=2
+INFO[11-19|09:07:50] Watching for finalization event          chain=fabric-edge src=99 nonce=2
+INFO[11-19|09:07:50] Submitted proposal vote                  chain=fabric-edge tx=0x58a22d84a08269ad2e8d52d8dc038621f1a21109d11c7b6e0d32d5bf21ea8505 src=99 depositNonce=2 gasPrice=1
+INFO[11-19|09:08:15] Submitted proposal execution             chain=fabric-edge tx=0x57419844881a07531e31667c609421662d94d21d0709e64fb728138309267e68 src=99 dst=100 nonce=2 gasPrice=3
 ```
 
-Once the execution transaction is successful, you will get NFT in Polygon Edge chain.
+Once the execution transaction is successful, you will get NFT in Fabric Edge chain.
