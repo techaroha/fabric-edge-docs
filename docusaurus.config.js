@@ -45,6 +45,13 @@ module.exports = {
             style: 'dark',
             copyright: `Made with ❤ by the humans at <a href='https://trapesys.io'>Trapesys</a>`
         },
+        algolia: {
+            appId: process.env.ALGOLIA_APP_ID,
+            apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
+            indexName: 'FABRIC_EDGE_DOCS',
+            contextualSearch: true,
+            searchPagePath: 'search',
+        },
         typesense: {
             typesenseCollectionName: 'sdk-docs.fabric-edge.techaroha.com', // Replace with your own doc site's name. Should match the collection name in the scraper settings.
             typesenseServerConfig: {
