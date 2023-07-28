@@ -43,7 +43,7 @@ module.exports = {
         },
         footer: {
             style: 'dark',
-            copyright: `Made with ❤ by the humans at <a href='https://trapesys.io'>Trapesys</a>`
+            copyright: `Made with ❤ by the humans at <a href='https://techaroha.com'>Techaroha</a>`
         },
         algolia: {
             appId: process.env.ALGOLIA_APP_ID,
