@@ -8,7 +8,7 @@ module.exports = {
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon-32x32.png',
-    organizationName: '0xFabric',
+    organizationName: 'Fabric',
     projectName: 'fabric-edge-docs',
     themes: ['docusaurus-theme-search-typesense'],
     themeConfig: {
