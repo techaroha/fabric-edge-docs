@@ -1,5 +1,9 @@
 ## Fabric Edge Docs
 
-The Fabric Edge docs have been migrated to https://github.com/maticnetwork/matic-docs
+This is the main repo for Fabric Edge documentation.
 
-This repo is archived.
+You can read Fabric Edge Documentation on https://fabric-edge-docs.techaroha.com
+
+If you'd like to contribute, please check out our contribution guide.
+
+For any questions, please contact the Fabric Edge Development team.
