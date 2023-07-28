@@ -22,5 +22,10 @@ yarn-error.log*
 # Prettier
 .prettierrc
 
-#Environment variables
+# Environment variables
 .env
+
+# Firebase Configuration
+.firebase
+.firebaserc
+firebase.json
