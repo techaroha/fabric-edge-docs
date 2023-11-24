@@ -30,7 +30,7 @@ Prior to using `go install` make sure that you have Go `>=1.17` installed and pr
 The stable branch is `develop`.
 
 ```shell
-git clone https://github.com/techaroha/fabric-edge-docs.git
+git clone https://github.com/techaroha/fabric-edge.git
 cd fabric-edge/
 go build main.go -o fabric-edge
 sudo mv fabric-edge /usr/local/bin
